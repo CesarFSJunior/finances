@@ -22,11 +22,8 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "ID")
     private UUID id;
-    @Column(name = "NAME")
     private String name;
-    @Column(name = "PASSWORD")
     private String password;
     private String email;
     private Date birthday;

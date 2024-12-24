@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -62,6 +60,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserDto> getMyUser() {
+
         User authenticatedUser = securityUtils.getAuthenticatedUser();
         return ResponseEntity.ok(new UserDto(authenticatedUser.getId(), authenticatedUser.getName(),
                 authenticatedUser.getEmail(), authenticatedUser.getBirthday()));
@@ -78,13 +77,13 @@ public class UserController {
     public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
 
         User authenticatedUser = securityUtils.getAuthenticatedUser();
-        if (authenticatedUser.getId() != id && authenticatedUser.getRole() != UserRole.ADMIN) return ResponseEntity.badRequest().build();
+        if (authenticatedUser.getId() != id && authenticatedUser.getRole() != UserRole.ADMIN)
+            return ResponseEntity.badRequest().build();
 
         userService.deleteById(id);
 
         return ResponseEntity.ok().build();
     }
-
 
 
 }

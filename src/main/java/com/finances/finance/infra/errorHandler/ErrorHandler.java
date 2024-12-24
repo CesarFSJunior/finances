@@ -1,5 +1,6 @@
 package com.finances.finance.infra.errorHandler;
 
+import com.finances.finance.errors.PaymentMethodNotFindError;
 import com.finances.finance.errors.UserNotFindError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,19 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFindError.class)
     private ResponseEntity<ErrorEntity> userNotFindHandler(UserNotFindError error) {
+
+        ErrorEntity errorEntity = new ErrorEntity();
+
+        errorEntity.setError(error.getClass().getSimpleName());
+        errorEntity.setMessage(error.getMessage());
+        errorEntity.setStatus(HttpStatus.NOT_FOUND.value());
+        errorEntity.setTimestamp(new Date());
+
+        return ResponseEntity.status(errorEntity.getStatus()).body(errorEntity);
+    }
+
+    @ExceptionHandler(PaymentMethodNotFindError.class)
+    private ResponseEntity<ErrorEntity> userNotFindHandler(PaymentMethodNotFindError error) {
 
         ErrorEntity errorEntity = new ErrorEntity();
 
