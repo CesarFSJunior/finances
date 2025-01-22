@@ -52,9 +52,7 @@ public class UserService implements UserDetailsService {
 
         UUID id = userRepository.save(user).getId();
 
-        UserDto userDto = new UserDto(id, user.getName(), user.getEmail(), user.getBirthday());
-
-        return userDto;
+        return new UserDto(id, user.getName(), user.getEmail(), user.getBirthday());
     }
 
     public UserDto getUserById(UUID id) {

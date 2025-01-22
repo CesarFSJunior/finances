@@ -1,6 +1,6 @@
 package com.finances.finance.domain.entities.modalidade;
 
-public enum TipoModalidade {
+public enum ModalityType {
 
     DEBITO("debito"),
     CREDITO("credito"),
@@ -9,7 +9,7 @@ public enum TipoModalidade {
     private String role;
 
 
-    TipoModalidade(String role) {
+    ModalityType(String role) {
         this.role = role;
     }
 

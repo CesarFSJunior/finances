@@ -5,9 +5,9 @@ spring:
   application:
     name: finance
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=finances;encrypt=true;trustServerCertificate=true;
-    username: tbrfinancas
-    password: 1234567
+    url: jdbc:sqlserver://localhost;databaseName=FINANCES;trustServerCertificate=true;
+    username: ${JWT_SECRET:database-username}
+    password: ${JWT_SECRET:database-password}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     trustServerCertificate: true
   flyway:

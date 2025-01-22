@@ -14,7 +14,7 @@ import java.util.UUID;
 @Entity
 @EqualsAndHashCode(of = "id")
 @Table(name = "MODALIDADE_PAGAMENTO")
-public class Modalidade {
+public class Modality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,7 +23,7 @@ public class Modalidade {
     @Column(name = "NOME_MODALIDADE")
     String nomeCartao;
     @Column(name = "TIPO_MODALIDADE")
-    TipoModalidade tipoModalidade;
+    ModalityType modalityType;
     @ManyToOne
     @JoinColumn(name = "OWNER_ID")
     User owner;

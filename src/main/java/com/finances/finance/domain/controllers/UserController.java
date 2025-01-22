@@ -1,11 +1,15 @@
 package com.finances.finance.domain.controllers;
 
 import com.finances.finance.domain.entities.user.*;
+import com.finances.finance.errors.UserCreationError;
 import com.finances.finance.infra.security.SecurityUtils;
 import com.finances.finance.infra.security.TokenService;
 import com.finances.finance.services.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +47,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDto> register(@RequestBody UserRegisterDto data) {
 
-        if (userService.loadUserByUsername(data.email()) != null) return ResponseEntity.badRequest().build();
+        if (userService.loadUserByUsername(data.email()) != null) throw new UserCreationError("User already exists");
 
         UserDto userDto = userService.register(data);
 
@@ -51,6 +55,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable UUID id) {
 
@@ -66,8 +71,10 @@ public class UserController {
                 authenticatedUser.getEmail(), authenticatedUser.getBirthday()));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/all")
     public ResponseEntity<List<UserDto>> getAll() {
+
         List<UserDto> users = userService.getAll();
 
         return ResponseEntity.ok(users);

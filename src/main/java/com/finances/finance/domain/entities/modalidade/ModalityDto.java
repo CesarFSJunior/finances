@@ -4,5 +4,5 @@ import com.finances.finance.domain.entities.user.UserDto;
 
 import java.util.UUID;
 
-public record ModalidadeDto(UUID idCartao, String nomeCartao, TipoModalidade tipoModalidade, UserDto owner) {
+public record ModalityDto(UUID idCartao, String nomeCartao, ModalityType modalityType, UserDto owner) {
 }
